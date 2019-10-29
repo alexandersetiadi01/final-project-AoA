@@ -1,3 +1,4 @@
+#source code: https://www.analytics-link.com/single-post/2018/09/14/Applying-the-A-Path-Finding-Algorithm-in-Python-Part-1-2D-square-grid
 import heapq
 import numpy as np
 import matplotlib.pyplot as plt
@@ -152,8 +153,7 @@ def heuristic(a, b):
 def astar(array, start, goal):
 
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)] #movement
-
-    # from internet(line 157 - 202)
+    
     close_set = set()
     came_from = {}
     gscore = {start: 0}    #movement cost from the starting point to our current point/potential neighbors
