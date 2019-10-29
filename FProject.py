@@ -1,4 +1,3 @@
-#source code: https://www.analytics-link.com/single-post/2018/09/14/Applying-the-A-Path-Finding-Algorithm-in-Python-Part-1-2D-square-grid
 import heapq
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +10,7 @@ grid1 = np.array([
     [0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0],
     [1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0],
     [0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0],
-    [0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
+    [0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
     [1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
@@ -99,11 +98,11 @@ D = (0, 0)
 
 def oneMap(grid, city):
     fig, ax = plt.subplots(figsize=(20, 20))
-    ax.imshow(grid, cmap=plt.cm.Dark2)
-    ax.scatter(A[1], A[0], label="A", color="red", s=200)
-    ax.scatter(B[1], B[0], label="B", color="blue", s=200)
-    ax.scatter(C[1], C[0], label="C", color="black", s=200)
-    ax.scatter(D[1], D[0], label="D", color="yellow", s=200)
+    ax.imshow(grid, cmap=plt.cm.binary)
+    ax.scatter(A[1], A[0], label="A", color="red", s=50)
+    ax.scatter(B[1], B[0], label="B", color="blue", s=50)
+    ax.scatter(C[1], C[0], label="C", color="pink", s=50)
+    ax.scatter(D[1], D[0], label="D", color="yellow", s=50)
     plt.title("city {}".format(city))
     plt.legend()
     plt.show()
@@ -111,38 +110,38 @@ def oneMap(grid, city):
 
 def showAll(A, B, C, D):
     # plot map and path
-    fig = plt.figure(figsize=(50,50));plt.clf()
+    fig = plt.figure(figsize=(50, 50)); plt.clf()
     ax1 = fig.add_subplot(2, 2, 1)
     plt.title("city 1")
-    ax1.imshow(grid1, cmap=plt.cm.Dark2)
-    ax1.scatter(A[1], A[0], label="A", color="red", s=200)
-    ax1.scatter(B[1], B[0], label="B", color="blue", s=200)
-    ax1.scatter(C[1], C[0], label="C", color="pink", s=200)
-    ax1.scatter(D[1], D[0], label="D", color="yellow", s=200)
+    ax1.imshow(grid1, cmap=plt.cm.binary)
+    ax1.scatter(A[1], A[0], label="A", color="red", s=50)
+    ax1.scatter(B[1], B[0], label="B", color="blue", s=50)
+    ax1.scatter(C[1], C[0], label="C", color="pink", s=50)
+    ax1.scatter(D[1], D[0], label="D", color="yellow", s=50)
 
     ax2 = fig.add_subplot(2, 2, 2)
     plt.title("city 2")
-    ax2.imshow(grid2, cmap=plt.cm.Dark2)
-    ax2.scatter(A[1], A[0], label="A", color="red", s=200)
-    ax2.scatter(B[1], B[0], label="B", color="blue", s=200)
-    ax2.scatter(C[1], C[0], label="C", color="pink", s=200)
-    ax2.scatter(D[1], D[0], label="D", color="yellow", s=200)
+    ax2.imshow(grid2, cmap=plt.cm.binary)
+    ax2.scatter(A[1], A[0], label="A", color="red", s=50)
+    ax2.scatter(B[1], B[0], label="B", color="blue", s=50)
+    ax2.scatter(C[1], C[0], label="C", color="pink", s=50)
+    ax2.scatter(D[1], D[0], label="D", color="yellow", s=50)
 
     ax3 = fig.add_subplot(2, 2, 3)
     plt.title("city 3")
-    ax3.imshow(grid3, cmap=plt.cm.Dark2)
-    ax3.scatter(A[1], A[0], label="A", color="red", s=200)
-    ax3.scatter(B[1], B[0], label="B", color="blue", s=200)
-    ax3.scatter(C[1], C[0], label="C", color="pink", s=200)
-    ax3.scatter(D[1], D[0], label="D", color="yellow", s=200)
+    ax3.imshow(grid3, cmap=plt.cm.binary)
+    ax3.scatter(A[1], A[0], label="A", color="red", s=50)
+    ax3.scatter(B[1], B[0], label="B", color="blue", s=50)
+    ax3.scatter(C[1], C[0], label="C", color="pink", s=50)
+    ax3.scatter(D[1], D[0], label="D", color="yellow", s=50)
 
     ax4 = fig.add_subplot(2, 2, 4)
     plt.title("city 4")
-    ax4.imshow(grid4, cmap=plt.cm.Dark2)
-    ax4.scatter(A[1], A[0], label="A", color="red", s=200)
-    ax4.scatter(B[1], B[0], label="B", color="blue", s=200)
-    ax4.scatter(C[1], C[0], label="C", color="pink", s=200)
-    ax4.scatter(D[1], D[0], label="D", color="yellow", s=200)
+    ax4.imshow(grid4, cmap=plt.cm.binary)
+    ax4.scatter(A[1], A[0], label="A", color="red", s=50)
+    ax4.scatter(B[1], B[0], label="B", color="blue", s=50)
+    ax4.scatter(C[1], C[0], label="C", color="pink", s=50)
+    ax4.scatter(D[1], D[0], label="D", color="yellow", s=50)
     plt.show()
 
 
@@ -152,11 +151,11 @@ def heuristic(a, b):
 
 def astar(array, start, goal):
 
-    neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)] #movement
-    
+    neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)] # movement
+
     close_set = set()
     came_from = {}
-    gscore = {start: 0}    #movement cost from the starting point to our current point/potential neighbors
+    gscore = {start: 0}    # movement cost from the starting point to our current point/potential neighbors
     fscore = {start: heuristic(start, goal)}
     oheap = []
 
@@ -202,29 +201,29 @@ def astar(array, start, goal):
                 heapq.heappush(oheap, (fscore[neighbor], neighbor))
 
 
-def travel(grid):
+def travel(grid, town):
 
     while True:
         print("traveling \n"
               "start from: \n1.A \n2.B \n3.C \n4.D \n5.cancel \nchoose: ")
-        start = input().upper()
-        if start == "1" or start == "A":
+        starting = input().upper()
+        if starting == "1" or starting == "A":
             start = A
             startPost = "A"
 
-        elif start == "2" or start == "B":
+        elif starting == "2" or starting == "B":
             start = B
             startPost = "B"
 
-        elif start == "3" or start == "C":
+        elif starting == "3" or starting == "C":
             start = C
             startPost = "C"
 
-        elif start == "4" or start == "D":
+        elif starting == "4" or starting == "D":
             start = D
             startPost = "D"
 
-        elif start == "5" or start == "cancel":
+        elif starting == "5" or starting == "cancel":
             break
 
         else:
@@ -265,7 +264,8 @@ def travel(grid):
             confirmation = input().upper()
             if confirmation == "Y":
                 route = astar(grid, start, goal)
-                #print("coordinates : ", route[::-1])
+                print("coordinates : ", route[::-1])
+                print("shortest path: ", len(route))
                 # route
                 x_coords = []
                 y_coords = []
@@ -278,13 +278,14 @@ def travel(grid):
 
                 # plot map and path
                 fig, ax = plt.subplots(figsize=(20, 20))
-                ax.imshow(grid, cmap=plt.cm.Dark2)
+                ax.imshow(grid, cmap=plt.cm.binary)
                 ax.scatter(A[1], A[0], label="A", color="red", s=200)
                 ax.scatter(B[1], B[0], label="B", color="blue", s=200)
                 ax.scatter(C[1], C[0], label="C", color="pink", s=200)
                 ax.scatter(D[1], D[0], label="D", color="yellow", s=200)
-                ax.plot(y_coords, x_coords, color="black")
+                ax.plot(y_coords, x_coords, color="green")
                 plt.legend()
+                plt.title("city {} from {} to {}".format(town, startPost, destinationPost))
                 plt.show()
                 break
 
@@ -329,7 +330,8 @@ def mainMenu():
                     print("confirm city {} (Y/N): ".format(city))
                     confirmation = input().upper()
                     if confirmation == "Y":
-                        travel(grid1)
+                        town = "1"
+                        travel(grid1, town)
                     elif confirmation == "N":
                         continue
 
@@ -351,7 +353,8 @@ def mainMenu():
                     print("confirm city {} (Y/N): ".format(city))
                     confirmation = input().upper()
                     if confirmation == "Y":
-                        travel(grid2)
+                        town = "2"
+                        travel(grid2, town)
                     elif confirmation == "N":
                         continue
 
@@ -373,7 +376,8 @@ def mainMenu():
                     print("confirm city {} (Y/N): ".format(city))
                     confirmation = input().upper()
                     if confirmation == "Y":
-                        travel(grid3)
+                        town = "3"
+                        travel(grid3, town)
                     elif confirmation == "N":
                         continue
 
@@ -395,7 +399,8 @@ def mainMenu():
                     print("confirm city {} (Y/N): ".format(city))
                     confirmation = input().upper()
                     if confirmation == "Y":
-                        travel(grid4)
+                        town = "4"
+                        travel(grid4, town)
                     elif confirmation == "N":
                         continue
 
